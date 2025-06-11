@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线调查问卷 - 灯供奉</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom font for better Mandarin display, if needed */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Noto Sans SC', 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light gray background */
+        }
+        .form-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #6366f1; /* Indigo border for visual appeal */
+        }
+        input[type="checkbox"]:checked + label span {
+            border-color: #6366f1; /* Highlight selected checkbox label */
+            background-color: #6366f1;
+            color: white;
+        }
+        /* Style for required label asterisk */
+        label.required::after {
+            content: ' *';
+            color: #ef4444; /* Red color for asterisk */
+        }
+        /* No specific hidden class for sponsor-input-group anymore as they are generated */
+        .sponsor-input-group {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .error-message {
+            color: #ef4444; /* Red color for error messages */
+            font-size: 0.75rem; /* text-xs */
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+    <div class="max-w-3xl w-full">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">在线调查问卷 - 灯供奉</h1>
+        <p class="text-center text-gray-600 mb-8">感谢您参与本次调查！</p>
+
+        <form id="donationForm" class="space-y-6">
+
+            <!-- Section: Contact Information -->
+            <div class="form-section">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">联系方式</h2>
+                
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700 required">姓名 (Name in Chinese)</label>
+                    <p class="text-xs text-gray-500 mb-1">请填写功德主的中文全名</p>
+                    <input type="text" id="name" name="name" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <div id="nameError" class="error-message hidden"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="whatsapp" class="block text-sm font-medium text-gray-700 required">Whatsapp 联络号码 (Whatsapp Contact Number)</label>
+                    <p class="text-xs text-gray-500 mb-1">请填写有效联络号码</p>
+                    <input type="tel" id="whatsapp" name="whatsapp" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <div id="whatsappError" class="error-message hidden"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 required">电邮地址 (Email Address)</label>
+                    <input type="email" id="email" name="email" required
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <div id="emailError" class="error-message hidden"></div>
+                </div>
+            </div>
+
+            <!-- Section: Lamp Type Selection -->
+            <div class="form-section">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 required">选择灯的种类 (Select Lamp Type)</h2>
+                <p class="text-xs text-gray-500 mb-3">请选择您要供奉的灯的种类并填写数量</p>
+                
+                <div class="space-y-4">
+                    <!-- Lamp Type 1: 灯 (RM10) -->
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="lampType1" name="lampTypeCheckbox" data-price="10" data-lamp-name="灯" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                        <label for="lampType1" class="block text-sm font-medium text-gray-700 flex items-center space-x-2">
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800 border border-transparent transition-all duration-200 ease-in-out">
+                                灯 (RM10)
+                            </span>
+                        </label>
+                        <input type="number" id="lamp1Quantity" name="lamp1Quantity" value="0" min="0" 
+                               class="w-24 px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center">
+                        <span class="text-sm font-medium text-gray-600">数量</span>
+                    </div>
+
+                    <!-- Lamp Type 2: 葫芦灯 (RM150) -->
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="lampType2" name="lampTypeCheckbox" data-price="150" data-lamp-name="葫芦灯" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                        <label for="lampType2" class="block text-sm font-medium text-gray-700 flex items-center space-x-2">
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800 border border-transparent transition-all duration-200 ease-in-out">
+                                葫芦灯 (RM150)
+                            </span>
+                        </label>
+                        <input type="number" id="lamp2Quantity" name="lamp2Quantity" value="0" min="0" 
+                               class="w-24 px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center">
+                        <span class="text-sm font-medium text-gray-600">数量</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Conditional Sponsor Names Input - General Container -->
+            <div id="allSponsorSections" class="space-y-6">
+                <!-- Sponsor Section for 灯 (RM10) -->
+                <div id="lamp1SponsorSection" class="form-section hidden">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">灯 (RM10) 功德主姓名</h2>
+                    <p class="text-xs text-gray-500 mb-3">请填写功德主姓名。</p>
+
+                    <div id="lamp1SponsorInputsContainer" class="space-y-4">
+                        <!-- Dynamic sponsor inputs will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Sponsor Section for 葫芦灯 (RM150) -->
+                <div id="lamp2SponsorSection" class="form-section hidden">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">葫芦灯 (RM150) 功德主姓名</h2>
+                    <p class="text-xs text-gray-500 mb-3">请填写功德主姓名。</p>
+
+                    <div id="lamp2SponsorInputsContainer" class="space-y-4">
+                        <!-- Dynamic sponsor inputs will be generated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Total and Receipt Upload -->
+            <div class="form-section">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">总计与收据 (Total & Receipt)</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">总计 (Total)</label>
+                    <p id="totalAmount" class="mt-1 text-2xl font-bold text-indigo-700">RM 0.00</p>
+                    <div id="totalBreakdown" class="text-sm text-gray-600 mt-1">
+                        <!-- Breakdown will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="receipt" class="block text-sm font-medium text-gray-700">上传收据 (Upload Receipt)</label>
+                    <p class="text-xs text-gray-500 mb-1">请上传您的付款收据。实际文件上传需要后端支持。</p>
+                    <input type="file" id="receipt" name="receipt" accept="image/*,application/pdf"
+                           class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    <div id="receiptError" class="error-message hidden"></div>
+                </div>
+            </div>
+
+            <!-- Submission Button -->
+            <button type="submit"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ease-in-out">
+                提交 (Submit)
+            </button>
+
+            <!-- Message Area -->
+            <div id="messageArea" class="mt-4 p-3 rounded-md text-sm text-center hidden" role="alert"></div>
+
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            const lampTypeCheckboxes = document.querySelectorAll('input[name="lampTypeCheckbox"]');
+            const lampQuantityInputs = document.querySelectorAll('input[name$="Quantity"]'); 
+            const totalAmountSpan = document.getElementById('totalAmount');
+            const totalBreakdownDiv = document.getElementById('totalBreakdown');
+            const donationForm = document.getElementById('donationForm');
+            const messageArea = document.getElementById('messageArea');
+            const receiptInput = document.getElementById('receipt');
+            const receiptErrorDiv = document.getElementById('receiptError');
+
+
+            // Contact info inputs and their error message divs
+            const contactInputs = {
+                name: { element: document.getElementById('name'), errorDiv: document.getElementById('nameError') },
+                whatsapp: { element: document.getElementById('whatsapp'), errorDiv: document.getElementById('whatsappError') },
+                email: { element: document.getElementById('email'), errorDiv: document.getElementById('emailError') }
+            };
+
+            // Sponsor sections and their dynamic input containers
+            const lampSponsorData = {
+                'lamp1': {
+                    section: document.getElementById('lamp1SponsorSection'),
+                    inputsContainer: document.getElementById('lamp1SponsorInputsContainer'),
+                },
+                'lamp2': {
+                    section: document.getElementById('lamp2SponsorSection'),
+                    inputsContainer: document.getElementById('lamp2SponsorInputsContainer'),
+                }
+            };
+
+            // --- Validation Functions ---
+
+            // Regex for Chinese characters (Simplified and Traditional)
+            // Covers common Chinese character ranges (e.g., U+4E00 to U+9FFF for CJK Unified Ideographs)
+            const chineseCharRegex = /^[\u4e00-\u9fff\u3400-\u4DBF\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29\uFF00-\uFFEF\u2E80-\u2EFF\u3000-\u303F\u3200-\u32FF\uFE30-\uFE4F\uF900-\uFAFF\u20000-\u2FA1F]+$/;
+
+            // Regex for phone numbers: Allows digits, optional leading +, no hyphens
+            const phoneRegex = /^\+?\d{8,15}$/; // 8 to 15 digits, optional + at start
+
+            // Standard email regex (more robust than basic checks)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            const validateInput = (inputElement, errorDiv, type) => {
+                const value = inputElement.value.trim();
+                let isValid = true;
+                let errorMessage = '';
+
+                // Check if field is visible and required, and if it's empty
+                // inputElement.offsetParent !== null checks if an element is visible
+                if (inputElement.hasAttribute('required') && inputElement.offsetParent !== null && value === '') {
+                    isValid = false;
+                    errorMessage = '此项为必填。(This field is required.)';
+                } else if (value !== '') { // Only validate format if not empty
+                    switch (type) {
+                        case 'chineseName':
+                            if (!chineseCharRegex.test(value)) {
+                                isValid = false;
+                                errorMessage = '姓名只能包含中文汉字。(Name must contain only Chinese characters.)';
+                            }
+                            break;
+                        case 'whatsapp':
+                            if (!phoneRegex.test(value)) {
+                                isValid = false;
+                                errorMessage = '请输入有效的电话号码 (例如: 0123456789 或 +60123456789)。(Please enter a valid phone number, e.g., 0123456789 or +60123456789.)';
+                            }
+                            break;
+                        case 'email':
+                            if (!emailRegex.test(value)) {
+                                isValid = false;
+                                errorMessage = '请输入有效的电邮地址。(Please enter a valid email address.)';
+                            }
+                            break;
+                        case 'receipt':
+                            const file = inputElement.files[0];
+                            if (file) {
+                                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+                                if (!allowedTypes.includes(file.type)) {
+                                    isValid = false;
+                                    errorMessage = '仅支持 JPG, PNG, GIF, PDF 文件。(Only JPG, PNG, GIF, PDF files are supported.)';
+                                } else if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                                    isValid = false;
+                                    errorMessage = '文件大小不能超过 5MB。(File size cannot exceed 5MB.)';
+                                }
+                            }
+                            // Receipt is not required, so no check for empty if not selected
+                            break;
+                    }
+                }
+
+                if (!isValid) {
+                    inputElement.classList.add('border-red-500'); // Add red border on error
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.classList.remove('hidden');
+                } else {
+                    inputElement.classList.remove('border-red-500'); // Remove red border on valid
+                    errorDiv.classList.add('hidden');
+                    errorDiv.textContent = '';
+                }
+                return isValid;
+            };
+
+            // --- Dynamic Sponsor Input Generation ---
+
+            // Function to dynamically generate sponsor input fields
+            const generateSponsorInputs = (lampPrefix, quantity) => {
+                const { inputsContainer } = lampSponsorData[lampPrefix];
+                
+                // Clear existing inputs
+                inputsContainer.innerHTML = ''; 
+
+                if (quantity > 0) {
+                    for (let i = 1; i <= quantity; i++) {
+                        const sponsorGroup = document.createElement('div');
+                        sponsorGroup.className = 'sponsor-input-group';
+
+                        const label = document.createElement('label');
+                        label.htmlFor = `${lampPrefix}Sponsor${String(i).padStart(2, '0')}`;
+                        label.className = `block text-sm font-medium text-gray-700 ${i === 1 ? 'required' : ''}`;
+                        label.textContent = `功德主${String(i).padStart(2, '0')}-中文姓名`;
+
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.id = `${lampPrefix}Sponsor${String(i).padStart(2, '0')}`;
+                        input.name = `${lampPrefix}Sponsor${String(i).padStart(2, '0')}`; // e.g., lamp1Sponsor01
+                        input.className = 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm';
+                        if (i === 1) { // Only the first one for each lamp type is required
+                            input.setAttribute('required', 'true');
+                        }
+
+                        // Add INPUT event listener for immediate validation
+                        input.addEventListener('input', () => { 
+                            // Get the error div for this dynamically created input
+                            const currentErrorDiv = document.getElementById(`${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`);
+                            validateInput(input, currentErrorDiv, 'chineseName');
+                        });
+
+                        const errorDiv = document.createElement('div');
+                        errorDiv.id = `${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`;
+                        errorDiv.className = 'error-message hidden';
+
+
+                        sponsorGroup.appendChild(label);
+                        sponsorGroup.appendChild(input);
+                        sponsorGroup.appendChild(errorDiv); // Append the error div
+                        inputsContainer.appendChild(sponsorGroup);
+                    }
+                }
+            };
+
+            // Function to update total and show/hide sponsor sections for both lamp types
+            const updateFormState = () => {
+                let totalCost = 0;
+                let hasLampsSelected = false;
+                let breakdownHtml = '';
+
+                // Loop through each lamp type checkbox
+                lampTypeCheckboxes.forEach(checkbox => {
+                    const lampPrefix = checkbox.id.replace('lampType', 'lamp'); // 'lamp1' or 'lamp2'
+                    const quantityInput = document.getElementById(lampPrefix + 'Quantity');
+                    const quantity = parseInt(quantityInput.value) || 0;
+                    const price = parseFloat(checkbox.dataset.price);
+                    const lampLabel = checkbox.dataset.lampName; // '灯' or '葫芦灯'
+
+                    // If checkbox is checked and quantity is greater than 0, calculate cost and show relevant sponsor section
+                    if (checkbox.checked && quantity > 0) {
+                        totalCost += quantity * price;
+                        hasLampsSelected = true;
+                        breakdownHtml += `<p>${lampLabel} x ${quantity} = RM ${(quantity * price).toFixed(2)}</p>`;
+                        
+                        // Show specific lamp's sponsor section and generate inputs
+                        lampSponsorData[lampPrefix].section.classList.remove('hidden');
+                        generateSponsorInputs(lampPrefix, quantity); // Dynamically generate inputs
+                    } else {
+                        // Hide specific lamp's sponsor section and clear its inputs
+                        lampSponsorData[lampPrefix].section.classList.add('hidden');
+                        generateSponsorInputs(lampPrefix, 0); // Generate 0 inputs (effectively clears them)
+                    }
+                });
+
+                // Update total display
+                totalAmountSpan.textContent = `RM ${totalCost.toFixed(2)}`;
+                totalBreakdownDiv.innerHTML = breakdownHtml;
+            };
+
+            // --- Event Listeners ---
+
+            // Add INPUT event listeners for contact info inputs for immediate validation
+            contactInputs.name.element.addEventListener('input', () => validateInput(contactInputs.name.element, contactInputs.name.errorDiv, 'chineseName'));
+            contactInputs.whatsapp.element.addEventListener('input', () => validateInput(contactInputs.whatsapp.element, contactInputs.whatsapp.errorDiv, 'whatsapp'));
+            contactInputs.email.element.addEventListener('input', () => validateInput(contactInputs.email.element, contactInputs.email.errorDiv, 'email'));
+            receiptInput.addEventListener('change', () => validateInput(receiptInput, receiptErrorDiv, 'receipt'));
+
+
+            // Add change/input event listeners for lamp types and quantities
+            lampTypeCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const quantityInput = document.getElementById(checkbox.id.replace('lampType', 'lamp') + 'Quantity');
+                    if (!checkbox.checked) {
+                        quantityInput.value = '0';
+                    } else if (quantityInput.value === '0') {
+                        quantityInput.value = '1';
+                    }
+                    updateFormState();
+                });
+            });
+
+            lampQuantityInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    const checkbox = document.getElementById(input.id.replace('lamp', 'lampType').replace('Quantity', ''));
+                    if (parseInt(input.value) > 0) {
+                        checkbox.checked = true;
+                    } else {
+                        checkbox.checked = false;
+                    }
+                    updateFormState();
+                });
+            });
+
+            // Initial call to set form state
+            updateFormState();
+
+            // --- Form Submission Handler ---
+            donationForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                messageArea.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
+                messageArea.classList.add('bg-blue-100', 'text-blue-800');
+                messageArea.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 正在提交... (Submitting...)';
+
+                // --- Comprehensive Validation Before Submission ---
+                let formIsValid = true;
+
+                // Validate static contact inputs
+                // Re-run validation for all contact inputs to catch any remaining errors
+                if (!validateInput(contactInputs.name.element, contactInputs.name.errorDiv, 'chineseName')) formIsValid = false;
+                if (!validateInput(contactInputs.whatsapp.element, contactInputs.whatsapp.errorDiv, 'whatsapp')) formIsValid = false;
+                if (!validateInput(contactInputs.email.element, contactInputs.email.errorDiv, 'email')) formIsValid = false;
+                if (!validateInput(receiptInput, receiptErrorDiv, 'receipt')) formIsValid = false; // Validate receipt
+
+                // Validate dynamically generated sponsor inputs
+                for (const lampPrefix in lampSponsorData) {
+                    const { section, inputsContainer } = lampSponsorData[lampPrefix];
+                    // Only validate if the sponsor section is visible
+                    if (!section.classList.contains('hidden')) {
+                        // Find all sponsor inputs within this visible section
+                        const currentSponsorInputs = inputsContainer.querySelectorAll('input[type="text"]');
+                        currentSponsorInputs.forEach(input => {
+                            const errorDiv = document.getElementById(input.id + 'Error');
+                            // Re-run validation for all generated inputs
+                            if (!validateInput(input, errorDiv, 'chineseName')) {
+                                formIsValid = false;
+                            }
+                        });
+                    }
+                }
+
+                // Check if at least one lamp type is selected with a quantity > 0
+                let isLampSelectedWithQuantity = false;
+                lampTypeCheckboxes.forEach(checkbox => {
+                    const quantityInput = document.getElementById(checkbox.id.replace('lampType', 'lamp') + 'Quantity');
+                    if (checkbox.checked && (parseInt(quantityInput.value) || 0) > 0) {
+                        isLampSelectedWithQuantity = true;
+                    }
+                });
+
+                if (!isLampSelectedWithQuantity) {
+                    messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
+                    messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
+                    messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 请选择至少一种灯的种类并填写数量。 (Please select at least one lamp type and specify a quantity.)';
+                    formIsValid = false; // Mark form as invalid
+                }
+
+                if (!formIsValid) {
+                    messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
+                    messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
+                    messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 请填写所有必填项并修正错误。(Please fill in all required fields and correct errors.)';
+                    return; // Stop submission if any validation fails
+                }
+
+                // --- If all validations pass, proceed with data collection and submission ---
+                const data = {};
+                // Collect static inputs
+                data['name'] = contactInputs.name.element.value.trim();
+                data['whatsapp'] = contactInputs.whatsapp.element.value.trim();
+                data['email'] = contactInputs.email.element.value.trim();
+
+                // Collect lamp quantities
+                lampQuantityInputs.forEach(input => {
+                    const quantity = parseInt(input.value) || 0;
+                    if (quantity > 0) {
+                        data[input.name] = quantity;
+                        const lampCheckbox = document.getElementById(input.id.replace('Quantity', ''));
+                        data[lampCheckbox.dataset.lampName + 'Price'] = lampCheckbox.dataset.price;
+                    }
+                });
+
+                // Collect dynamic sponsor names
+                const allSponsorNames = {};
+                for (const lampPrefix in lampSponsorData) {
+                    const { section, inputsContainer } = lampSponsorData[lampPrefix];
+                    if (!section.classList.contains('hidden')) {
+                        const currentSponsorInputs = inputsContainer.querySelectorAll('input[type="text"]');
+                        currentSponsorInputs.forEach(input => {
+                            if (input.value.trim() !== '') { // Only include filled sponsor names
+                                allSponsorNames[input.name] = input.value.trim();
+                            }
+                        });
+                    }
+                }
+                data['sponsorNames'] = allSponsorNames; // Store as an object/map
+
+                // Add calculated total and breakdown
+                data['totalAmount'] = totalAmountSpan.textContent;
+                data['totalBreakdown'] = totalBreakdownDiv.textContent.trim();
+
+                // Handle receipt file as Base64 string
+                const receiptFile = receiptInput.files[0];
+                if (receiptFile) {
+                    const reader = new FileReader();
+                    reader.onload = async function(event) {
+                        data['receiptBase64'] = event.target.result; // Base64 string
+                        data['receiptFileName'] = receiptFile.name;
+                        data['receiptFileType'] = receiptFile.type;
+                        await sendDataToBackend(data);
+                    };
+                    reader.onerror = function() {
+                        console.error("File reading failed.");
+                        messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
+                        messageArea.classList.add('bg-red-100', 'text-red-800');
+                        messageArea.innerHTML = '<i class="fas fa-times-circle mr-2"></i> 读取收据文件失败。(Failed to read receipt file.)';
+                    };
+                    reader.readAsDataURL(receiptFile); // Read file as Base64
+                } else {
+                    // If no receipt, send data without it
+                    await sendDataToBackend(data);
+                }
+            });
+
+            async function sendDataToBackend(data) {
+                // Log FormData entries for debugging (you won't see file content here directly)
+                console.log('Form Data (for backend):', data);
+
+                // --- ACTUAL FETCH CALL TO BACKEND ---
+                // IMPORTANT: Replace this with your deployed Google Apps Script Web App URL
+                // Example: 'https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzzzzz/exec'
+                const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbycHQ5is0mXOfZgoL_3G8nLaqc8hDAtaSYRIHN0a31hqTST15fVstlvjPxEKeIYLboq/exec'; 
+
+                if (API_ENDPOINT === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                    messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
+                    messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
+                    messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 请在代码中设置 Google Apps Script Web App URL。(Please set your Google Apps Script Web App URL in the code.)';
+                    console.error("API_ENDPOINT not set.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(API_ENDPOINT, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json', // Sending JSON now
+                        },
+                        body: JSON.stringify(data) // Send JSON data
+                    });
+
+                    if (!response.ok) {
+                        // Attempt to read error message from backend response if available
+                        let errorText = `HTTP error! status: ${response.status}`;
+                        try {
+                            const errorJson = await response.json();
+                            errorText = errorJson.message || JSON.stringify(errorJson);
+                        } catch (e) {
+                            // If response is not JSON, use default errorText
+                        }
+                        throw new Error(errorText);
+                    }
+
+                    const result = await response.json(); // Assuming backend returns JSON
+                    console.log('Submission Result:', result);
+
+                    messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
+                    messageArea.classList.add('bg-green-100', 'text-green-800');
+                    messageArea.innerHTML = '<i class="fas fa-check-circle mr-2"></i> 表单提交成功！(Form submitted successfully!)';
+                    
+                    // Reset form and update state
+                    donationForm.reset(); 
+                    lampQuantityInputs.forEach(input => input.value = '0');
+                    lampTypeCheckboxes.forEach(checkbox => checkbox.checked = false);
+                    updateFormState(); // This will regenerate/clear dynamic inputs and reset total
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
+                    messageArea.classList.add('bg-red-100', 'text-red-800');
+                    messageArea.innerHTML = `<i class="fas fa-times-circle mr-2"></i> 提交失败：${error.message} (Submission failed: ${error.message})`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
