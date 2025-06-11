@@ -474,8 +474,11 @@
                     const quantity = parseInt(input.value) || 0;
                     if (quantity > 0) {
                         data[input.name] = quantity;
-                        const lampCheckbox = document.getElementById(input.id.replace('Quantity', ''));
-                        data[lampCheckbox.dataset.lampName + 'Price'] = lampCheckbox.dataset.price;
+                        // Corrected: use 'lampType' in the ID to find the checkbox element
+                        const lampCheckbox = document.getElementById(input.id.replace('lamp', 'lampType').replace('Quantity', ''));
+                        if (lampCheckbox) { // Add a check to ensure lampCheckbox is found
+                            data[lampCheckbox.dataset.lampName + 'Price'] = lampCheckbox.dataset.price;
+                        }
                     }
                 });
 
@@ -529,7 +532,7 @@
                 // Example: 'https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzzzzz/exec'
                 const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbycHQ5is0mXOfZgoL_3G8nLaqc8hDAtaSYRIHN0a31hqTST15fVstlvjPxEKeIYLboq/exec'; 
 
-                if (API_ENDPOINT === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE' || !API_ENDPOINT) {
+                if (API_ENDPOINT === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE' || !API_ENDPOINT || !API_ENDPOINT.includes('script.google.com/macros/s/')) {
                     messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
                     messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
                     messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 错误：Google Apps Script Web App URL 未设置或无效。(Error: Google Apps Script Web App URL is not set or invalid.)';
