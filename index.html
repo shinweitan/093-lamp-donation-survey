@@ -207,9 +207,10 @@
 
             // Regex for Chinese characters (Simplified and Traditional)
             // Covers common Chinese character ranges (e.g., U+4E00 to U+9FFF for CJK Unified Ideographs)
-            const chineseCharRegex = /^[\u4e00-\u9fff\u3400-\u4DBF\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29\uFF00-\uFFEF\u2E80-\u2EFF\u3000-\u303F\u3200-\u32FF\uFE30-\uFE4F\uF900-\uFAFF\u20000-\u2FA1F]+$/;
+            // Added support for common punctuation used with Chinese names (e.g. spaces, dots, dashes for names with middle initials)
+            const chineseCharRegex = /^[\u4e00-\u9fff\u3400-\u4DBF\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29\uFF00-\uFFEF\u2E80-\u2EFF\u3000-\u303F\u3200-\u32FF\uFE30-\uFE4F\uF900-\uFAFF\u20000-\u2FA1F\s\.\-]+$/;
 
-            // Regex for phone numbers: Allows digits, optional leading +, no hyphens
+            // Regex for phone numbers: Allows digits, optional leading +, no hyphens, no spaces
             const phoneRegex = /^\+?\d{8,15}$/; // 8 to 15 digits, optional + at start
 
             // Standard email regex (more robust than basic checks)
@@ -220,9 +221,10 @@
                 let isValid = true;
                 let errorMessage = '';
 
-                // Check if field is visible and required, and if it's empty
-                // inputElement.offsetParent !== null checks if an element is visible
-                if (inputElement.hasAttribute('required') && inputElement.offsetParent !== null && value === '') {
+                // Only validate if element is visible or if it's the specific file input
+                const isVisible = inputElement.offsetParent !== null || inputElement.type === 'file';
+
+                if (inputElement.hasAttribute('required') && isVisible && value === '') {
                     isValid = false;
                     errorMessage = '此项为必填。(This field is required.)';
                 } else if (value !== '') { // Only validate format if not empty
@@ -230,11 +232,13 @@
                         case 'chineseName':
                             if (!chineseCharRegex.test(value)) {
                                 isValid = false;
-                                errorMessage = '姓名只能包含中文汉字。(Name must contain only Chinese characters.)';
+                                errorMessage = '姓名只能包含中文汉字、空格或标点符号。(Name must contain only Chinese characters, spaces, or punctuation.)';
                             }
                             break;
                         case 'whatsapp':
-                            if (!phoneRegex.test(value)) {
+                            // Clean value by removing spaces and hyphens before validation
+                            const cleanedValue = value.replace(/[\s-]/g, ''); 
+                            if (!phoneRegex.test(cleanedValue)) {
                                 isValid = false;
                                 errorMessage = '请输入有效的电话号码 (例如: 0123456789 或 +60123456789)。(Please enter a valid phone number, e.g., 0123456789 or +60123456789.)';
                             }
@@ -308,6 +312,12 @@
                             const currentErrorDiv = document.getElementById(`${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`);
                             validateInput(input, currentErrorDiv, 'chineseName');
                         });
+                        // Add BLUR event listener as a fallback/final check
+                        input.addEventListener('blur', () => {
+                            const currentErrorDiv = document.getElementById(`${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`);
+                            validateInput(input, currentErrorDiv, 'chineseName');
+                        });
+
 
                         const errorDiv = document.createElement('div');
                         errorDiv.id = `${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`;
@@ -512,7 +522,6 @@
             });
 
             async function sendDataToBackend(data) {
-                // Log FormData entries for debugging (you won't see file content here directly)
                 console.log('Form Data (for backend):', data);
 
                 // --- ACTUAL FETCH CALL TO BACKEND ---
@@ -520,11 +529,11 @@
                 // Example: 'https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzzzzz/exec'
                 const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbycHQ5is0mXOfZgoL_3G8nLaqc8hDAtaSYRIHN0a31hqTST15fVstlvjPxEKeIYLboq/exec'; 
 
-                if (API_ENDPOINT === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                if (API_ENDPOINT === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE' || !API_ENDPOINT) {
                     messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
                     messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
-                    messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 请在代码中设置 Google Apps Script Web App URL。(Please set your Google Apps Script Web App URL in the code.)';
-                    console.error("API_ENDPOINT not set.");
+                    messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 错误：Google Apps Script Web App URL 未设置或无效。(Error: Google Apps Script Web App URL is not set or invalid.)';
+                    console.error("API_ENDPOINT not set or invalid.");
                     return;
                 }
 
@@ -538,7 +547,6 @@
                     });
 
                     if (!response.ok) {
-                        // Attempt to read error message from backend response if available
                         let errorText = `HTTP error! status: ${response.status}`;
                         try {
                             const errorJson = await response.json();
