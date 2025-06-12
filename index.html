@@ -530,7 +530,7 @@
                 // --- ACTUAL FETCH CALL TO BACKEND ---
                 // IMPORTANT: Replace this with your deployed Google Apps Script Web App URL
                 // Example: 'https://script.google.com/macros/s/AKfycbzzzzzzzzzzzzzzzzzzzzzzzzzzzz/exec'
-                const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbycHQ5is0mXOfZgoL_3G8nLaqc8hDAtaSYRIHN0a31hqTST15fVstlvjPxEKeIYLboq/exec'; 
+                const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbycHQ5is0mXOfZgoL_3G8nLaqc8hDAtaSYRIHN0a31hqTST15fVstlvjPxEKeIYLboq/exec?cache=' + Date.now(); 
 
                 if (API_ENDPOINT === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE' || !API_ENDPOINT || !API_ENDPOINT.includes('script.google.com/macros/s/')) {
                     messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
