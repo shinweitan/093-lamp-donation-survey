@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>在线调查问卷 - 灯供奉</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Custom font for better Mandarin display, if needed */
@@ -44,6 +42,13 @@
             font-size: 0.75rem; /* text-xs */
             margin-top: 0.25rem;
         }
+        /* Style for disabled button */
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-color: #a0aec0; /* Grey background for disabled button */
+            pointer-events: none; /* Ensure no click events when disabled */
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
@@ -53,7 +58,6 @@
 
         <form id="donationForm" class="space-y-6">
 
-            <!-- Section: Contact Information -->
             <div class="form-section">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">联系方式</h2>
                 
@@ -61,7 +65,7 @@
                     <label for="name" class="block text-sm font-medium text-gray-700 required">姓名 (Name in Chinese)</label>
                     <p class="text-xs text-gray-500 mb-1">请填写功德主的中文全名</p>
                     <input type="text" id="name" name="name" required
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <div id="nameError" class="error-message hidden"></div>
                 </div>
 
@@ -69,25 +73,23 @@
                     <label for="whatsapp" class="block text-sm font-medium text-gray-700 required">Whatsapp 联络号码 (Whatsapp Contact Number)</label>
                     <p class="text-xs text-gray-500 mb-1">请填写有效联络号码</p>
                     <input type="tel" id="whatsapp" name="whatsapp" required
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <div id="whatsappError" class="error-message hidden"></div>
                 </div>
 
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700 required">电邮地址 (Email Address)</label>
                     <input type="email" id="email" name="email" required
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <div id="emailError" class="error-message hidden"></div>
                 </div>
             </div>
 
-            <!-- Section: Lamp Type Selection -->
             <div class="form-section">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4 required">选择灯的种类 (Select Lamp Type)</h2>
                 <p class="text-xs text-gray-500 mb-3">请选择您要供奉的灯的种类并填写数量</p>
                 
                 <div class="space-y-4">
-                    <!-- Lamp Type 1: 灯 (RM10) -->
                     <div class="flex items-center space-x-3">
                         <input type="checkbox" id="lampType1" name="lampTypeCheckbox" data-price="10" data-lamp-name="灯" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                         <label for="lampType1" class="block text-sm font-medium text-gray-700 flex items-center space-x-2">
@@ -96,11 +98,10 @@
                             </span>
                         </label>
                         <input type="number" id="lamp1Quantity" name="lamp1Quantity" value="0" min="0" 
-                               class="w-24 px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center">
+                                class="w-24 px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center">
                         <span class="text-sm font-medium text-gray-600">数量</span>
                     </div>
 
-                    <!-- Lamp Type 2: 葫芦灯 (RM150) -->
                     <div class="flex items-center space-x-3">
                         <input type="checkbox" id="lampType2" name="lampTypeCheckbox" data-price="150" data-lamp-name="葫芦灯" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                         <label for="lampType2" class="block text-sm font-medium text-gray-700 flex items-center space-x-2">
@@ -109,36 +110,30 @@
                             </span>
                         </label>
                         <input type="number" id="lamp2Quantity" name="lamp2Quantity" value="0" min="0" 
-                               class="w-24 px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center">
+                                class="w-24 px-3 py-1.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center">
                         <span class="text-sm font-medium text-gray-600">数量</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Section: Conditional Sponsor Names Input - General Container -->
             <div id="allSponsorSections" class="space-y-6">
-                <!-- Sponsor Section for 灯 (RM10) -->
                 <div id="lamp1SponsorSection" class="form-section hidden">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4">灯 (RM10) 功德主姓名</h2>
                     <p class="text-xs text-gray-500 mb-3">请填写功德主姓名。</p>
 
                     <div id="lamp1SponsorInputsContainer" class="space-y-4">
-                        <!-- Dynamic sponsor inputs will be generated here -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Sponsor Section for 葫芦灯 (RM150) -->
                 <div id="lamp2SponsorSection" class="form-section hidden">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4">葫芦灯 (RM150) 功德主姓名</h2>
                     <p class="text-xs text-gray-500 mb-3">请填写功德主姓名。</p>
 
                     <div id="lamp2SponsorInputsContainer" class="space-y-4">
-                        <!-- Dynamic sponsor inputs will be generated here -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
-            <!-- Section: Total and Receipt Upload -->
             <div class="form-section">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">总计与收据 (Total & Receipt)</h2>
                 
@@ -146,26 +141,23 @@
                     <label class="block text-sm font-medium text-gray-700">总计 (Total)</label>
                     <p id="totalAmount" class="mt-1 text-2xl font-bold text-indigo-700">RM 0.00</p>
                     <div id="totalBreakdown" class="text-sm text-gray-600 mt-1">
-                        <!-- Breakdown will be inserted here -->
-                    </div>
+                        </div>
                 </div>
 
                 <div class="mb-4">
-                    <label for="receipt" class="block text-sm font-medium text-gray-700">上传收据 (Upload Receipt)</label>
+                    <label for="receipt" class="block text-sm font-medium text-gray-700 required">上传收据 (Upload Receipt)</label>
                     <p class="text-xs text-gray-500 mb-1">请上传您的付款收据。实际文件上传需要后端支持。</p>
-                    <input type="file" id="receipt" name="receipt" accept="image/*,application/pdf"
-                           class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    <input type="file" id="receipt" name="receipt" accept="image/*,application/pdf" required
+                            class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                     <div id="receiptError" class="error-message hidden"></div>
                 </div>
             </div>
 
-            <!-- Submission Button -->
-            <button type="submit"
+            <button type="submit" id="submitButton" disabled
                     class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ease-in-out">
                 提交 (Submit)
             </button>
 
-            <!-- Message Area -->
             <div id="messageArea" class="mt-4 p-3 rounded-md text-sm text-center hidden" role="alert"></div>
 
         </form>
@@ -185,7 +177,7 @@
         const messageArea = document.getElementById('messageArea');
         const receiptInput = document.getElementById('receipt');
         const receiptErrorDiv = document.getElementById('receiptError');
-
+        const submitButton = document.getElementById('submitButton'); // Get the submit button
 
         // Contact info inputs and their error message divs
         const contactInputs = {
@@ -209,7 +201,7 @@
         // --- Validation Functions ---
 
         // Regex for Chinese characters (Simplified and Traditional)
-        const chineseCharRegex = /^[\u4e00-\u9fff\u3400-\u4DBF\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29\uFF00-\uFFEF\u2E80-\u2EFF\u3000-\u303F\u3200-\u32FF\uFE30-\uFE4F\uF900-\uFAFF\u20000-\u2FA1F\s\.\-]+$/;
+        const chineseCharRegex =/^[\u4e00-\u9fff\u3400-\u4DBF\u20000-\u2FA1F]+$/u;
 
         // Regex for phone numbers: Allows digits, optional leading +, no hyphens, no spaces
         const phoneRegex = /^\+?\d{8,15}$/; // 8 to 15 digits, optional + at start
@@ -233,11 +225,10 @@
                     case 'chineseName':
                         if (!chineseCharRegex.test(value)) {
                             isValid = false;
-                            errorMessage = '姓名只能包含中文汉字、空格或标点符号。(Name must contain only Chinese characters, spaces, or punctuation.)';
+                            errorMessage = '姓名只能包含中文汉字。(Name must contain only Chinese characters.)';
                         }
                         break;
                     case 'whatsapp':
-                        // Clean value by removing spaces and hyphens before validation
                         const cleanedValue = value.replace(/[\s-]/g, '');
                         if (!phoneRegex.test(cleanedValue)) {
                             isValid = false;
@@ -261,8 +252,10 @@
                                 isValid = false;
                                 errorMessage = '文件大小不能超过 5MB。(File size cannot exceed 5MB.)';
                             }
+                        } else if (inputElement.hasAttribute('required')) { // If receipt is required and not selected
+                            isValid = false;
+                            errorMessage = '请上传付款凭证。(Please upload payment receipt.)';
                         }
-                        // Receipt is not required, so no check for empty if not selected
                         break;
                 }
             }
@@ -307,23 +300,21 @@
                         input.setAttribute('required', 'true');
                     }
 
-                    // Add INPUT event listener for immediate validation
+                    // Add INPUT and BLUR event listeners for immediate validation and button state update
                     input.addEventListener('input', () => {
-                        // Get the error div for this dynamically created input
                         const currentErrorDiv = document.getElementById(`${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`);
                         validateInput(input, currentErrorDiv, 'chineseName');
+                        checkFormValidity(); // Recheck form validity
                     });
-                    // Add BLUR event listener as a fallback/final check
                     input.addEventListener('blur', () => {
                         const currentErrorDiv = document.getElementById(`${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`);
                         validateInput(input, currentErrorDiv, 'chineseName');
+                        checkFormValidity(); // Recheck form validity
                     });
-
 
                     const errorDiv = document.createElement('div');
                     errorDiv.id = `${lampPrefix}Sponsor${String(i).padStart(2, '0')}Error`;
                     errorDiv.className = 'error-message hidden';
-
 
                     sponsorGroup.appendChild(label);
                     sponsorGroup.appendChild(input);
@@ -336,7 +327,6 @@
         // Function to update total and show/hide sponsor sections for both lamp types
         const updateFormState = () => {
             let totalCost = 0;
-            let hasLampsSelected = false;
             let breakdownHtml = '';
 
             // Loop through each lamp type checkbox
@@ -350,7 +340,6 @@
                 // If checkbox is checked and quantity is greater than 0, calculate cost and show relevant sponsor section
                 if (checkbox.checked && quantity > 0) {
                     totalCost += quantity * price;
-                    hasLampsSelected = true;
                     breakdownHtml += `<p>${lampLabel} x ${quantity} = RM ${(quantity * price).toFixed(2)}</p>`;
 
                     // Show specific lamp's sponsor section and generate inputs
@@ -366,27 +355,92 @@
             // Update total display
             totalAmountSpan.textContent = `RM ${totalCost.toFixed(2)}`;
             totalBreakdownDiv.innerHTML = breakdownHtml;
+
+            checkFormValidity(); // Recheck form validity after state updates
         };
+
+
+        // --- checkFormValidity Function ---
+        const checkFormValidity = () => {
+            let overallFormValid = true;
+
+            // 1. Validate static contact inputs
+            if (!validateInput(contactInputs.name.element, contactInputs.name.errorDiv, 'chineseName')) overallFormValid = false;
+            if (!validateInput(contactInputs.whatsapp.element, contactInputs.whatsapp.errorDiv, 'whatsapp')) overallFormValid = false;
+            if (!validateInput(contactInputs.email.element, contactInputs.email.errorDiv, 'email')) overallFormValid = false;
+            
+            // 2. Validate receipt input (now required)
+            if (!validateInput(receiptInput, receiptErrorDiv, 'receipt')) overallFormValid = false;
+
+            // 3. Validate dynamically generated sponsor inputs (only if their section is visible)
+            for (const lampPrefix in lampSponsorData) {
+                const { section, inputsContainer } = lampSponsorData[lampPrefix];
+                if (!section.classList.contains('hidden')) {
+                    const currentSponsorInputs = inputsContainer.querySelectorAll('input[type="text"]');
+                    currentSponsorInputs.forEach(input => {
+                        const errorDiv = document.getElementById(input.id + 'Error');
+                        if (!validateInput(input, errorDiv, 'chineseName')) {
+                            overallFormValid = false;
+                        }
+                    });
+                }
+            }
+
+            // 4. Check if at least one lamp type is selected with a quantity > 0
+            let isLampSelectedWithQuantity = false;
+            lampTypeCheckboxes.forEach(checkbox => {
+                const quantityInput = document.getElementById(checkbox.id.replace('lampType', 'lamp') + 'Quantity');
+                if (checkbox.checked && (parseInt(quantityInput.value) || 0) > 0) {
+                    isLampSelectedWithQuantity = true;
+                }
+            });
+
+            if (!isLampSelectedWithQuantity) {
+                overallFormValid = false;
+            }
+
+            // Finally, enable/disable the submit button
+            submitButton.disabled = !overallFormValid;
+        };
+
 
         // --- Event Listeners ---
 
-        // Add INPUT event listeners for contact info inputs for immediate validation
-        contactInputs.name.element.addEventListener('input', () => validateInput(contactInputs.name.element, contactInputs.name.errorDiv, 'chineseName'));
-        contactInputs.whatsapp.element.addEventListener('input', () => validateInput(contactInputs.whatsapp.element, contactInputs.whatsapp.errorDiv, 'whatsapp'));
-        contactInputs.email.element.addEventListener('input', () => validateInput(contactInputs.email.element, contactInputs.email.errorDiv, 'email'));
-        receiptInput.addEventListener('change', () => validateInput(receiptInput, receiptErrorDiv, 'receipt'));
+        // Add INPUT and BLUR event listeners for contact info inputs for immediate validation and button state update
+        Object.values(contactInputs).forEach(({ element, errorDiv, type }) => {
+            // Determine the validation type based on the input's ID
+            let validationType;
+            if (element.id === 'name') validationType = 'chineseName';
+            else if (element.id === 'whatsapp') validationType = 'whatsapp';
+            else if (element.id === 'email') validationType = 'email';
+
+            element.addEventListener('input', () => {
+                validateInput(element, errorDiv, validationType);
+                checkFormValidity(); // Recheck form validity
+            });
+            element.addEventListener('blur', () => {
+                validateInput(element, errorDiv, validationType);
+                checkFormValidity(); // Recheck form validity
+            });
+        });
+
+        // Add CHANGE event listener for receipt input for immediate validation and button state update
+        receiptInput.addEventListener('change', () => {
+            validateInput(receiptInput, receiptErrorDiv, 'receipt');
+            checkFormValidity(); // Recheck form validity
+        });
 
 
-        // Add change/input event listeners for lamp types and quantities
+        // Add change/input event listeners for lamp types and quantities (also calls updateFormState which calls checkFormValidity)
         lampTypeCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {
                 const quantityInput = document.getElementById(checkbox.id.replace('lampType', 'lamp') + 'Quantity');
                 if (!checkbox.checked) {
                     quantityInput.value = '0';
-                } else if (quantityInput.value === '0') {
+                } else if (parseInt(quantityInput.value) === 0) { // Only set to 1 if it's 0 when checked
                     quantityInput.value = '1';
                 }
-                updateFormState();
+                updateFormState(); // This will call checkFormValidity
             });
         });
 
@@ -398,72 +452,34 @@
                 } else {
                     checkbox.checked = false;
                 }
-                updateFormState();
+                updateFormState(); // This will call checkFormValidity
             });
+            input.addEventListener('blur', updateFormState); // Also update on blur for final check
         });
 
-        // Initial call to set form state
+
+        // Initial calls to set form state and button validity
         updateFormState();
+        checkFormValidity(); // Call initially to set button state
 
         // --- Form Submission Handler ---
         donationForm.addEventListener('submit', async (event) => {
             event.preventDefault(); // Prevent default form submission
 
+            // One final check before submission, although button should be disabled if invalid
+            if (submitButton.disabled) {
+                messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
+                messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
+                messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 请填写所有必填项并修正错误。(Please fill in all required fields and correct errors.)';
+                return; // Prevent submission if button is still disabled
+            }
+
+
             messageArea.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800');
             messageArea.classList.add('bg-blue-100', 'text-blue-800');
             messageArea.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 正在提交... (Submitting...)';
 
-            // --- Comprehensive Validation Before Submission ---
-            let formIsValid = true;
-
-            // Validate static contact inputs
-            // Re-run validation for all contact inputs to catch any remaining errors
-            if (!validateInput(contactInputs.name.element, contactInputs.name.errorDiv, 'chineseName')) formIsValid = false;
-            if (!validateInput(contactInputs.whatsapp.element, contactInputs.whatsapp.errorDiv, 'whatsapp')) formIsValid = false;
-            if (!validateInput(contactInputs.email.element, contactInputs.email.errorDiv, 'email')) formIsValid = false;
-            if (!validateInput(receiptInput, receiptErrorDiv, 'receipt')) formIsValid = false; // Validate receipt
-
-            // Validate dynamically generated sponsor inputs
-            for (const lampPrefix in lampSponsorData) {
-                const { section, inputsContainer } = lampSponsorData[lampPrefix];
-                // Only validate if the sponsor section is visible
-                if (!section.classList.contains('hidden')) {
-                    // Find all sponsor inputs within this visible section
-                    const currentSponsorInputs = inputsContainer.querySelectorAll('input[type="text"]');
-                    currentSponsorInputs.forEach(input => {
-                        const errorDiv = document.getElementById(input.id + 'Error');
-                        // Re-run validation for all generated inputs
-                        if (!validateInput(input, errorDiv, 'chineseName')) {
-                            formIsValid = false;
-                        }
-                    });
-                }
-            }
-
-            // Check if at least one lamp type is selected with a quantity > 0
-            let isLampSelectedWithQuantity = false;
-            lampTypeCheckboxes.forEach(checkbox => {
-                const quantityInput = document.getElementById(checkbox.id.replace('lampType', 'lamp') + 'Quantity');
-                if (checkbox.checked && (parseInt(quantityInput.value) || 0) > 0) {
-                    isLampSelectedWithQuantity = true;
-                }
-            });
-
-            if (!isLampSelectedWithQuantity) {
-                messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
-                messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
-                messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 请选择至少一种灯的种类并填写数量。 (Please select at least one lamp type and specify a quantity.)';
-                formIsValid = false; // Mark form as invalid
-            }
-
-            if (!formIsValid) {
-                messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800');
-                messageArea.classList.add('bg-yellow-100', 'text-yellow-800');
-                messageArea.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i> 请填写所有必填项并修正错误。(Please fill in all required fields and correct errors.)';
-                return; // Stop submission if any validation fails
-            }
-
-            // --- If all validations pass, proceed with data collection and submission ---
+            // --- Data Collection and Submission ---
             const data = {};
             // Collect static inputs
             data['name'] = contactInputs.name.element.value.trim();
@@ -475,9 +491,8 @@
                 const quantity = parseInt(input.value) || 0;
                 if (quantity > 0) {
                     data[input.name] = quantity;
-                    // Corrected: use 'lampType' in the ID to find the checkbox element
                     const lampCheckbox = document.getElementById(input.id.replace('lamp', 'lampType').replace('Quantity', ''));
-                    if (lampCheckbox) { // Add a check to ensure lampCheckbox is found
+                    if (lampCheckbox) {
                         data[lampCheckbox.dataset.lampName + 'Price'] = lampCheckbox.dataset.price;
                     }
                 }
@@ -490,13 +505,13 @@
                 if (!section.classList.contains('hidden')) {
                     const currentSponsorInputs = inputsContainer.querySelectorAll('input[type="text"]');
                     currentSponsorInputs.forEach(input => {
-                        if (input.value.trim() !== '') { // Only include filled sponsor names
+                        if (input.value.trim() !== '') {
                             allSponsorNames[input.name] = input.value.trim();
                         }
                     });
                 }
             }
-            data['sponsorNames'] = allSponsorNames; // Store as an object/map
+            data['sponsorNames'] = allSponsorNames;
 
             // Add calculated total and breakdown
             data['totalAmount'] = totalAmountSpan.textContent;
@@ -507,7 +522,7 @@
             if (receiptFile) {
                 const reader = new FileReader();
                 reader.onload = async function(event) {
-                    data['receiptBase64'] = event.target.result; // Base64 string
+                    data['receiptBase64'] = event.target.result;
                     data['receiptFileName'] = receiptFile.name;
                     data['receiptFileType'] = receiptFile.type;
                     await sendDataToBackend(data);
@@ -518,32 +533,31 @@
                     messageArea.classList.add('bg-red-100', 'text-red-800');
                     messageArea.innerHTML = '<i class="fas fa-times-circle mr-2"></i> 读取收据文件失败。(Failed to read receipt file.)';
                 };
-                reader.readAsDataURL(receiptFile); // Read file as Base64
+                reader.readAsDataURL(receiptFile);
             } else {
-                // If no receipt, send data without it
-                await sendDataToBackend(data);
+                // This 'else' block should ideally not be reached if the button is correctly disabled,
+                // but included as a fallback.
+                console.error("No receipt file attached during submission attempt.");
+                messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
+                messageArea.classList.add('bg-red-100', 'text-red-800');
+                messageArea.innerHTML = '<i class="fas fa-times-circle mr-2"></i> 提交失败：请务必上传付款凭证。(Submission failed: Please upload payment receipt.)';
+                submitButton.disabled = true; // Re-disable if somehow bypassed
             }
         });
 
         async function sendDataToBackend(data) {
-            // Add cache buster to URL
-            const url = API_ENDPOINT + '?cacheBuster=' + Date.now(); // Changed to 'cacheBuster' query parameter
+            const url = API_ENDPOINT + '?cacheBuster=' + Date.now();
 
             try {
-               
-
-                // Then make the actual POST request
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { },
                     body: JSON.stringify(data)
                 });
 
-                const result = await response.json(); // Always try to parse JSON for more detailed errors
+                const result = await response.json();
 
                 if (!response.ok) {
-                    // If the response status is not OK (e.g., 400, 500), throw an error
-                    // Use the message from the backend if available, otherwise a generic one.
                     throw new Error(result.message || 'Network response was not ok');
                 }
 
@@ -554,17 +568,17 @@
                 // Optional: Clear form after successful submission
                 donationForm.reset();
                 updateFormState(); // Reset quantities and sponsor inputs
+                checkFormValidity(); // Recheck form validity to ensure button is disabled until new input
 
-                return result;
-
-            } catch (error)  {
-        console.error("Error submitting form:", error);
-        messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
-        messageArea.classList.add('bg-red-100', 'text-red-800');
-        messageArea.innerHTML = `<i class="fas fa-times-circle mr-2"></i> 提交失败：${error.message || '网络错误 (Network error)'}`;
-    }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                messageArea.classList.remove('hidden', 'bg-blue-100', 'text-blue-800', 'bg-green-100', 'text-green-800', 'bg-yellow-100', 'text-yellow-800');
+                messageArea.classList.add('bg-red-100', 'text-red-800');
+                messageArea.innerHTML = `<i class="fas fa-times-circle mr-2"></i> 提交失败：${error.message || '网络错误 (Network error)'}`;
+                submitButton.disabled = true; // Ensure button is disabled on error
+            }
         }
     });
-</script>
+    </script>
 </body>
 </html>
