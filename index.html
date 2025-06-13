@@ -64,8 +64,8 @@
 </head>
 <body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
     <div class="max-w-3xl w-full">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">在线调查问卷 - 灯供奉</h1>
-        <p class="text-center text-gray-600 mb-8">感谢您参与本次调查！</p>
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">在线表格 - 灯供奉</h1>
+        <p class="text-center text-gray-600 mb-8">供灯功德：光明，智慧圆满、永断无明</p>
 
         <form id="donationForm" class="space-y-6">
             <!-- Contact Information Section -->
@@ -144,6 +144,31 @@
                 </div>
             </div>
 
+<!-- Bank Information Section -->
+<div class="form-section">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">付款信息 (Payment Information)</h2>
+    
+    <div class="mb-4 bg-blue-50 p-4 rounded-md">
+        <p class="text-sm font-medium text-gray-700 mb-2">请汇款至以下账户 (Please bank in to):</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <p class="text-sm font-semibold">银行名称 (Bank Name):</p>
+                <p class="text-sm">HONG LEONG BANK</p>
+            </div>
+            <div>
+                <p class="text-sm font-semibold">账号 (Account Number):</p>
+                <p class="text-sm">19400036297</p>
+            </div>
+            <div class="md:col-span-2">
+                <p class="text-sm font-semibold">账户名称 (Account Name):</p>
+                <p class="text-sm">Persatuan Penganut Agama Buddha Ling Jiou San Malaysia</p>
+            </div>
+        </div>
+        <p class="text-xs text-gray-500 mt-3">请在上传收据前完成汇款 (Please complete the bank transfer before uploading receipt)</p>
+    </div>
+</div>
+
+
             <!-- Total and Receipt Section -->
             <div class="form-section">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">总计与收据 (Total & Receipt)</h2>
@@ -156,7 +181,7 @@
 
                 <div class="mb-4">
                     <label for="receipt" class="block text-sm font-medium text-gray-700 required">上传收据 (Upload Receipt)</label>
-                    <p class="text-xs text-gray-500 mb-1">请上传您的付款收据。实际文件上传需要后端支持。</p>
+                    <p class="text-xs text-gray-500 mb-1">请上传您的付款收据。</p>
                     <input type="file" id="receipt" name="receipt" accept="image/*,application/pdf" required
                             class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                     <div id="receiptError" class="error-message hidden"></div>
